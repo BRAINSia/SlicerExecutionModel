@@ -98,8 +98,10 @@ macro(SEMMacroBuildCLI)
   set(CLP ${LOCAL_SEM_NAME})
 
   # SlicerExecutionModel
-  find_package(SlicerExecutionModel REQUIRED GenerateCLP)
-  include(${GenerateCLP_USE_FILE})
+  if(NOT SlicerExecutionModel_FOUND)
+    find_package(SlicerExecutionModel REQUIRED GenerateCLP)
+    include(${GenerateCLP_USE_FILE})
+  endif()
 
   set(${CLP}_SOURCE ${CLP}.cxx ${LOCAL_SEM_ADDITIONAL_SRCS})
   generateclp(${CLP}_SOURCE ${cli_xml_file} ${LOCAL_SEM_LOGO_HEADER})
